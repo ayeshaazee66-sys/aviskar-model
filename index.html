@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FraudX Scam Detector</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+
+    background-image: url("{{ url_for('static', filename='bg.png') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+body::before {
+    content: "";
+    position: fixed;
+    left: -10%;
+    bottom: -180px;
+    width: 120%;
+    height: 350px;
+
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 50% 50% 0 0;
+
+    z-index: -1;
+    pointer-events: none;
+}
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: white;
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 5%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .logo {
+    height: 140px;
+    width: 140px;
+    object-fit: contain;
+    display: block;
+}
+        nav {
+            display: flex;
+            gap: 45px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #263653;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 15px 8px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #1478e8;
+        }
+
+        nav a.active {
+            color: #1478e8;
+            border-bottom: 3px solid #1478e8;
+        }
+
+        .safe-badge {
+            background: #eef7ff;
+            padding: 15px 25px;
+            border-radius: 16px;
+            font-weight: bold;
+            color: #263653;
+            line-height: 1.5;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            text-align: center;
+            padding: 28px 20px 20px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 52px;
+            font-weight: 800;
+            color: #10224a;
+        }
+
+        .hero h1 span {
+            color: #1478e8;
+        }
+
+        .hero p {
+            font-size: 19px;
+            margin: 10px 0 22px;
+            color: #263653;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background: white;
+            border: 1px solid #dce8f5;
+            border-radius: 25px;
+            padding: 11px 22px;
+            color: #34476a;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+        }
+
+        /* ================= MAIN FORM ================= */
+
+        .form-card {
+            max-width: 1160px;
+            margin: 5px auto 20px;
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 5px 25px rgba(30,70,120,0.10);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 35px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            border: 1px solid #d5deea;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 16px;
+            outline: none;
+            background: #fff;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #1478e8;
+            box-shadow: 0 0 0 3px rgba(20,120,232,0.10);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 78px;
+        }
+
+        .location-btn {
+            margin-top: 10px;
+            background: #1478e8;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 13px 22px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .location-btn:hover {
+            background: #0c65c9;
+        }
+
+        .check-btn {
+            display: block;
+            margin: 18px auto 0;
+            width: 420px;
+            max-width: 100%;
+            background: #1478e8;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 12px rgba(20,120,232,0.25);
+        }
+
+        .check-btn:hover {
+            background: #0966d1;
+            transform: translateY(-1px);
+        }
+
+        /* ================= RESULT ================= */
+
+        #result {
+            display: none;
+            max-width: 1160px;
+            margin: 20px auto;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #f2bfc5;
+            background: #fff2f3;
+        }
+
+        .result-inner {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr 1fr;
+        }
+
+        .score-section,
+        .why-section,
+        .action-section {
+            padding: 25px;
+        }
+
+        .score-section {
+            text-align: center;
+            border-right: 1px solid #efc9cd;
+        }
+
+        .why-section {
+            border-right: 1px solid #efc9cd;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: conic-gradient(
+                #e9232d 0deg,
+                #e9232d var(--score-angle),
+                #ffd7da var(--score-angle),
+                #ffd7da 360deg
+            );
+        }
+
+        .score-circle::before {
+            content: "";
+            position: absolute;
+            width: 115px;
+            height: 115px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .score-number {
+            position: relative;
+            z-index: 1;
+            font-size: 42px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .score-number span {
+            display: block;
+            font-size: 15px;
+            font-weight: normal;
+            color: #555;
+            text-align: center;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            background: #e9232d;
+        }
+
+        .score-section h3 {
+            margin-bottom: 5px;
+        }
+
+        .score-description {
+            color: #40516f;
+            line-height: 1.5;
+        }
+
+        .result-heading {
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .why-section ul,
+        .action-section ul {
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+
+        .why-section li::marker {
+            color: #e9232d;
+        }
+
+        .action-section li {
+            list-style: none;
+            position: relative;
+            padding-left: 8px;
+        }
+
+        .action-section li::before {
+            content: "✓";
+            background: #20a56b;
+            color: white;
+            width: 19px;
+            height: 19px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            margin-right: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ================= SAFETY CARDS ================= */
+
+        .safety-cards {
+            max-width: 1160px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .safety-card {
+            background: white;
+            padding: 20px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(30,70,120,0.08);
+        }
+
+        .safety-card h3 {
+            margin: 0 0 7px;
+        }
+
+        .safety-card p {
+            margin: 0;
+            color: #62718c;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            margin-top: 25px;
+            padding: 20px 5%;
+            background: white;
+            border-top: 1px solid #dfe8f2;
+            display: flex;
+            justify-content: space-between;
+            color: #61708a;
+        }
+
+        /* ================= LOADING ================= */
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 850px) {
+
+            header {
+                height: auto;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .score-section,
+            .why-section {
+                border-right: none;
+                border-bottom: 1px solid #efc9cd;
+            }
+
+            .safety-cards {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 15px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .safety-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .form-card {
+                margin: 10px;
+                padding: 20px;
+            }
+
+            #result {
+                margin: 15px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header>
+
+        <img
+    src="{{ url_for('static', filename='logo.jpeg') }}"
+    class="logo"
+    alt="FraudX Scam Detector Logo"
+>
+        
+        
+
+        <nav>
+
+            <a href="#" class="active">🏠<br>Home</a>
+
+            <a href="/about">ℹ️<br>About</a>
+
+            <a href="#tips">💡<br>Tips</a>
+
+            <a href="#report">📨<br>Report</a>
+
+        </nav>
+
+        <div class="safe-badge">
+            🛡️ Stay Safe<br>
+            Stay Alert<br>
+            Stop Scams
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <h1>
+            FraudX <span>Scam Detector</span>
+        </h1>
+
+        <p>
+            Check before you pay. Spot fraud before it hurts.
+        </p>
+
+        <div class="features">
+
+            <div class="feature">
+                🔗 Detects suspicious links
+            </div>
+
+            <div class="feature">
+                💬 Analyzes messages
+            </div>
+
+            <div class="feature">
+                💳 Checks transaction details
+            </div>
+
+            <div class="feature">
+                📍 Helps you stay safe
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FORM ================= -->
+
+    <div class="form-card">
+
+        <div class="form-grid">
+
+            <div class="field">
+
+                <label>📍 Delivery Location</label>
+
+                <input
+                    type="text"
+                    id="location"
+                    placeholder="Enter city/state (e.g. Bhilai, Chhattisgarh)"
+                >
+
+                <button
+                    class="location-btn"
+                    onclick="getLocation()"
+                >
+                    🎯 Use My Location
+                </button>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>🌐 Website / Link</label>
+
+                <input
+                    type="text"
+                    id="website"
+                    placeholder="Enter website (e.g. amazon.in)"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>💰 Order Amount (₹)</label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    placeholder="Enter amount (e.g. 500)"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>💬 Message / Details</label>
+
+                <textarea
+                    id="message"
+                    placeholder="Paste message, offer details or any suspicious text here..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="check-btn"
+            onclick="checkScam()"
+        >
+            🔍 Check Before Payment
+        </button>
+
+    </div>
+
+
+    <!-- ================= RESULT ================= -->
+
+    <div id="result">
+
+        <div class="result-inner">
+
+            <div class="score-section">
+
+                <div
+                    class="score-circle"
+                    id="scoreCircle"
+                    style="--score-angle: 0deg;"
+                >
+
+                    <div class="score-number">
+
+                        <span id="scoreNumber">0</span>
+
+                        <span>/100</span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="risk-badge"
+                    id="riskBadge"
+                >
+                    LOW RISK
+                </div>
+
+
+                <h3 id="riskTitle">
+                    This looks safe.
+                </h3>
+
+
+                <p
+                    class="score-description"
+                    id="riskDescription"
+                >
+                    No major warning signs were detected.
+                </p>
+
+            </div>
+
+
+            <div class="why-section">
+
+                <h2 class="result-heading">
+                    ⚠️ Why is this risky?
+                </h2>
+
+                <div id="reasons">
+                </div>
+
+            </div>
+
+
+            <div class="action-section">
+
+                <h2 class="result-heading">
+                    💡 What should you do?
+                </h2>
+
+                <ul id="actions">
+
+                    <li>Do not share OTP or passwords.</li>
+
+                    <li>Avoid clicking unknown links.</li>
+
+                    <li>Verify the website URL.</li>
+
+                    <li>Use secure payment methods.</li>
+
+                    <li>Contact the official company.</li>
+
+                    <li>Report if you think it's a scam.</li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SAFETY CARDS ================= -->
+
+    <div class="safety-cards" id="tips">
+
+        <div class="safety-card">
+
+            <h3>🚫 Don't Share OTP</h3>
+
+            <p>
+                Banks never ask for your OTP.
+            </p>
+
+        </div>
+
+
+        <div class="safety-card">
+
+            <h3>🔗 Check Links</h3>
+
+            <p>
+                Verify website URLs before payment.
+            </p>
+
+        </div>
+
+
+        <div class="safety-card">
+
+            <h3>🛡️ Watch for Red Flags</h3>
+
+            <p>
+                Be careful with urgent offers and unusual payment requests.
+            </p>
+
+        </div>
+
+
+        <div class="safety-card" id="report">
+
+            <h3>👥 Report Scams</h3>
+
+            <p>
+                Help make the internet safer for everyone.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div>
+            © 2026  Scam Detector. All rights reserved.
+        </div>
+
+        <div>
+            Together for a Safer Digital World ❤️
+        </div>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function getLocation() {
+
+            if (!navigator.geolocation) {
+
+                alert(
+                    "Location is not supported by this browser."
+                );
+
+                return;
+            }
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                function(position) {
+
+                    let latitude =
+                        position.coords.latitude;
+
+                    let longitude =
+                        position.coords.longitude;
+
+
+                    document.getElementById("location").value =
+                        "Location detected (" +
+                        latitude.toFixed(2) +
+                        ", " +
+                        longitude.toFixed(2) +
+                        ")";
+
+                },
+
+
+                function() {
+
+                    alert(
+                        "Location permission was not provided. " +
+                        "You can enter your city/state manually."
+                    );
+
+                }
+
+            );
+
+        }
+
+
+        async function checkScam() {
+
+            let location =
+                document.getElementById("location").value;
+
+            let website =
+                document.getElementById("website").value;
+
+            let amount =
+                document.getElementById("amount").value;
+
+            let message =
+                document.getElementById("message").value;
+
+
+            let button =
+                document.querySelector(".check-btn");
+
+
+            button.innerText =
+                "⏳ Checking...";
+
+            button.classList.add("loading");
+
+
+            try {
+
+                let response = await fetch("/check", {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type": "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        location: location,
+
+                        website: website,
+
+                        amount: amount,
+
+                        message: message
+
+                    })
+
+                });
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Server error"
+                    );
+
+                }
+
+
+                let result =
+                    await response.json();
+
+
+                displayResult(result);
+
+            }
+
+
+            catch (error) {
+
+                alert(
+                    "Something went wrong while checking. " +
+                    "Please make sure the Flask server is running."
+                );
+
+                console.error(error);
+
+            }
+
+
+            finally {
+
+                button.innerText =
+                    "🔍 Check Before Payment";
+
+                button.classList.remove("loading");
+
+            }
+
+        }
+
+
+        function displayResult(result) {
+
+            let score =
+                Number(result.score) || 0;
+
+
+            score =
+                Math.max(
+                    0,
+                    Math.min(100, score)
+                );
+
+
+            let level =
+                result.level || "LOW RISK";
+
+
+            let resultBox =
+                document.getElementById("result");
+
+
+            let scoreNumber =
+                document.getElementById("scoreNumber");
+
+
+            let scoreCircle =
+                document.getElementById("scoreCircle");
+
+
+            let riskBadge =
+                document.getElementById("riskBadge");
+
+
+            let riskTitle =
+                document.getElementById("riskTitle");
+
+
+            let riskDescription =
+                document.getElementById("riskDescription");
+
+
+            let reasonsBox =
+                document.getElementById("reasons");
+
+
+            scoreNumber.innerText =
+                score;
+
+
+            scoreCircle.style
+                .setProperty(
+                    "--score-angle",
+                    (score * 3.6) + "deg"
+                );
+
+
+            riskBadge.innerText =
+                level;
+
+
+            reasonsBox.innerHTML = "";
+
+
+            let reasons =
+                result.reasons || [];
+
+
+            if (reasons.length === 0) {
+
+                reasonsBox.innerHTML =
+                    "<p>✅ No obvious scam indicators were detected.</p>";
+
+            }
+
+            else {
+
+                let ul =
+                    document.createElement("ul");
+
+
+                reasons.forEach(function(reason) {
+
+                    let li =
+                        document.createElement("li");
+
+                    li.textContent =
+                        reason;
+
+                    ul.appendChild(li);
+
+                });
+
+
+                reasonsBox.appendChild(ul);
+
+            }
+
+
+            if (score >= 60) {
+
+                riskBadge.style.background =
+                    "#e9232d";
+
+                resultBox.style.background =
+                    "#fff0f1";
+
+                riskTitle.innerText =
+                    "This looks suspicious!";
+
+                riskDescription.innerText =
+                    "We found multiple warning signs in the transaction details.";
+
+            }
+
+            else if (score >= 30) {
+
+                riskBadge.style.background =
+                    "#e09b00";
+
+                resultBox.style.background =
+                    "#fff8e5";
+
+                riskTitle.innerText =
+                    "Be careful.";
+
+                riskDescription.innerText =
+                    "Some warning signs were detected. Verify the details before paying.";
+
+            }
+
+            else {
+
+                riskBadge.style.background =
+                    "#20a56b";
+
+                resultBox.style.background =
+                    "#effaf4";
+
+                riskTitle.innerText =
+                    "This looks safe.";
+
+                riskDescription.innerText =
+                    "No major warning signs were detected.";
+
+            }
+
+
+            resultBox.style.display =
+                "block";
+
+
+            resultBox.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>

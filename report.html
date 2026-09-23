@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report a Scam | FraudX Scam Detector</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef6ff, #f8fbff);
+            color: #172033;
+        }
+
+        /* NAVBAR */
+
+        header {
+            background: white;
+            height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1769e0;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background: #eaf3ff;
+            color: #1769e0;
+        }
+
+        /* HERO */
+
+        .hero {
+            text-align: center;
+            padding: 65px 20px 35px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ffecec;
+            color: #d62828;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 15px;
+            color: #111827;
+        }
+
+        .hero h1 span {
+            color: #d62828;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: auto;
+            color: #64748b;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* REPORT BOX */
+
+        .report-container {
+            max-width: 850px;
+            margin: 0 auto 70px;
+            padding: 0 20px;
+        }
+
+        .report-box {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 12px 35px rgba(30, 80, 150, 0.10);
+            border: 1px solid #e3edf8;
+        }
+
+        .report-box h2 {
+            margin-bottom: 8px;
+            color: #172033;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #d5dfeb;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: #fbfdff;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #1769e0;
+            box-shadow: 0 0 0 3px rgba(23,105,224,0.10);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #1769e0;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #0f55bd;
+            transform: translateY(-2px);
+        }
+
+        /* NOTICE */
+
+        .notice {
+            margin-top: 25px;
+            padding: 18px;
+            background: #fff8e6;
+            border: 1px solid #f5df9d;
+            border-radius: 14px;
+            color: #765c15;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* SUCCESS */
+
+        #successMessage {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 14px;
+            background: #eaf8ef;
+            border: 1px solid #b9e4c5;
+            color: #176b35;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #111827;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 28px 20px;
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            header {
+                height: auto;
+                padding: 15px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                padding: 8px 10px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .report-box {
+                padding: 25px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header>
+
+        <div class="brand">
+
+            <img src="{{ url_for('static', filename='logo.jpeg') }}"
+                 alt="FraudX Scam Detector Logo">
+
+            <div class="brand-name">
+                FraudX Scam Detector
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="/">
+                🏠 Home
+            </a>
+
+            <a href="/about">
+                ℹ️ About
+            </a>
+
+            <a href="/tips">
+                💡 Tips
+            </a>
+
+            <a href="/report" class="active">
+                📢 Report
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="badge">
+            🚨 Report Suspicious Activity
+        </div>
+
+        <h1>
+            Report a <span>Scam</span>
+        </h1>
+
+        <p>
+            Found a suspicious website, message or transaction?
+            Share the details so you can keep a record and help
+            identify potentially fraudulent activity.
+        </p>
+
+    </section>
+
+
+    <!-- REPORT FORM -->
+
+    <section class="report-container">
+
+        <div class="report-box">
+
+            <h2>
+                📋 Scam Report
+            </h2>
+
+            <p class="subtitle">
+                Please provide as much information as you can.
+            </p>
+
+
+            <form id="reportForm">
+
+                <div class="form-group">
+
+                    <label for="type">
+                        What are you reporting?
+                    </label>
+
+                    <select id="type" required>
+
+                        <option value="">
+                            Select an option
+                        </option>
+
+                        <option>
+                            Suspicious Website
+                        </option>
+
+                        <option>
+                            Scam Message
+                        </option>
+
+                        <option>
+                            Suspicious Payment
+                        </option>
+
+                        <option>
+                            Fake Offer / Prize
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="website">
+                        Website or Link
+                    </label>
+
+                    <input
+                        type="url"
+                        id="website"
+                        placeholder="https://example.com"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="details">
+                        Describe the scam
+                    </label>
+
+                    <textarea
+                        id="details"
+                        placeholder="Tell us what happened..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="contact">
+                        Contact information (optional)
+                    </label>
+
+                    <input
+                        type="text"
+                        id="contact"
+                        placeholder="Email or phone number"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="submit-button">
+                    🚨 Submit Report
+                </button>
+
+            </form>
+
+
+            <div id="successMessage">
+                ✅ Your report has been recorded successfully.
+            </div>
+
+
+            <div class="notice">
+
+                ⚠️ <strong>Important:</strong>
+                Do not share passwords, OTPs, PINs, bank account
+                numbers or other sensitive information in this form.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            <strong>FraudX Scam Detector</strong>
+            — Helping you stay safer online.
+        </p>
+
+        <p style="margin-top:8px;">
+            Check before you pay. Spot fraud before it hurts.
+        </p>
+
+    </footer>
+
+
+    <!-- SIMPLE FORM ACTION -->
+
+    <script>
+
+        document.getElementById("reportForm").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            document.getElementById("successMessage").style.display = "block";
+
+            this.reset();
+
+        });
+
+    </script>
+
+</body>
+
+</html>
