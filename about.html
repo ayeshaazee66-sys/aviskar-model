@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>About - FraudX Scam Detector</title>
+
+    <style>
+         body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+
+    background-image: url("{{ url_for('static', filename='bg.png') }}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+body::before {
+    content: "";
+    position: fixed;
+    left: -18%;
+    bottom: -20%;
+    width: 70%;
+    height: 70%;
+    background: rgba(30, 144, 255, 0.22);
+    border-radius: 50%;
+    transform: rotate(-15deg);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    right: -18%;
+    bottom: -20%;
+    width: 70%;
+    height: 70%;
+    background: rgba(0, 119, 230, 0.22);
+    border-radius: 50%;
+    transform: rotate(15deg);
+    z-index: -1;
+    pointer-events: none;
+}
+
+
+
+
+        .navbar {
+            background: white;
+            padding: 20px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .navbar img {
+            width: 130px;
+        }
+
+        .nav-links a {
+            margin: 0 18px;
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #1769e0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 50px auto;
+            background: white;
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1769e0;
+            font-size: 38px;
+        }
+
+        h2 {
+            color: #222;
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .highlight {
+            background: #eef6ff;
+            padding: 20px;
+            border-left: 5px solid #1769e0;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 35px auto 0;
+            padding: 12px 25px;
+            background: #1769e0;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <img src="{{ url_for('static', filename='logo.jpeg') }}" alt="FraudX Scam Detector Logo">
+
+        <div class="nav-links">
+            <a href="/">🏠 Home</a>
+            <a href="/about">ℹ️ About</a>
+            <a href="/tips">💡 Tips</a>
+            <a href="/report">📢 Report</a>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <h1>About FraudX Scam Detector</h1>
+
+        <div class="highlight">
+            <p>
+                🛡️ <strong>FraudX Scam Detector</strong> is a safety
+                tool designed to help people identify possible scam
+                and fraud warning signs before making a payment.
+            </p>
+        </div>
+
+        <h2>🔍 What does it do?</h2>
+
+        <p>
+            FraudX Scam Detector checks information such as
+            suspicious messages, website links, transaction amounts
+            and delivery details.
+        </p>
+
+        <h2>🎯 Our Goal</h2>
+
+        <p>
+            Our goal is to help users think twice before sending
+            money or sharing sensitive information with unknown
+            people or websites.
+        </p>
+
+        <h2>🛡️ Stay Safe</h2>
+
+        <p>
+            Never share your OTP, password, PIN or other confidential
+            information with someone you do not trust.
+        </p>
+
+        <p>
+            <strong>Spot fraud before it hurts.</strong>
+        </p>
+
+        <a class="back" href="/">← Back to Home</a>
+
+    </div>
+
+</body>
+
+</html>
